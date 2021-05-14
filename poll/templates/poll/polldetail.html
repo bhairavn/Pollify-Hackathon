@@ -1,0 +1,245 @@
+{% extends 'poll/base.html'%}
+{% load static %}
+{% load crispy_forms_tags%}
+
+
+{% block links %}
+
+
+
+
+{% endblock links %}
+
+{% block style %}
+
+ html {
+	 font-family: 'Helvetica Neue', 'Helvetica', sans-serif;
+	 -webkit-font-smoothing: antialiased;
+	 text-rendering: optimizeLegibility;
+}
+ html, body, .result {
+	 height: 100%;
+	 overflow-y:hidden;
+}
+ .result::before, .result::after {
+	 content: '';
+	 left: 0;
+	 position: absolute;
+	 right: 0;
+	 z-index: 0;
+}
+ .result::before {  
+	 background: -webkit-gradient(linear, 0 0, 0 100%, from(rgba(0, 0, 0, 0.8)), to(rgba(0, 0, 0, 0)));
+	 background: -webkit-linear-gradient(rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+	 background: -moz-linear-gradient(rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+	 background: -o-linear-gradient(rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+	 background: linear-gradient(rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+	 top: 0;
+	 height: 50%;
+}
+ .result::after {
+	 background: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 9%, rgba(0, 0, 0, 0.8) 100%);
+	 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(0, 0, 0, 0)), color-stop(9%, rgba(0, 0, 0, 0)), color-stop(100%, rgba(0, 0, 0, 0.8)));
+	 background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 9%, rgba(0, 0, 0, 0.8) 100%);
+	 background: -o-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 9%, rgba(0, 0, 0, 0.8) 100%);
+	 background: -ms-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 9%, rgba(0, 0, 0, 0.8) 100%);
+	 background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 9%, rgba(0, 0, 0, 0.8) 100%);
+	 bottom: 0;
+	 height: 20%;
+}
+ h1 {
+	 color: #fff;
+	 font-size: 1em;
+	 left: 0;
+	 margin: 0;
+	 position: absolute;
+	 right: 0;
+	 top: 50px;
+	 text-align: center;
+	 z-index: 3;
+}
+ @media (min-width: 35em) {
+	 h1 {
+		 font-size: 2em;
+	}
+}
+ @media (min-width: 75em) {
+	 h1 {
+		 font-size: 3em;
+		 top: 100px;
+	}
+}
+ label {
+	 display: -webkit-flex;
+	 display: -moz-flex;
+	 display: flex;
+	 -webkit-flex-direction: column;
+	 -moz-flex-direction: column;
+	 flex-direction: column;
+	 background-position: center center;
+	 background-size: cover;
+	 cursor: pointer;
+	 height: 50%;
+	 position: relative;
+	 text-align: center;
+	 width: 100%;
+}
+ @media (min-width: 35em) {
+	 label {
+		 float: left;
+		 height: 100%;
+		 width: 50%;
+	}
+}
+ label:hover::before {
+	 background-color: rgba(0, 0, 0, .5);
+}
+ label::before, label::after {
+	 bottom: 0;
+	 content: '';
+	 left: 0;
+	 position: absolute;
+	 right: 0;
+	 top: 0;
+	 transition: background-color 150ms ease-out;
+}
+ label::before {
+	 background-color: rgba(0, 0, 0, .8);
+	 z-index: 2;
+}
+ label > span {
+	 color: rgba(255, 255, 255, .9);
+	 display: block;
+	 font-size: 2em;
+	 font-weight: bold;
+	 line-height: 1em;
+	 margin: auto;
+	 padding: 0 50px;
+	 position: relative;
+	 z-index: 3;
+}
+ @media (min-width: 35em) {
+	 label > span {
+		 font-size: 4em;
+	}
+}
+ @media (min-width: 75em) {
+	 label > span {
+		 font-size: 4em;
+	}
+}
+ input[type="submit"] {
+	 display: none;
+}
+ .percentage {
+	 color: rgba(255, 255, 255, .9);
+	 display: none;
+	 font-size: 4em;
+	 font-weight: bold;
+	 margin: auto;
+	 position: relative;
+	 z-index: 3;
+}
+ @media (min-width: 35em) {
+	 .percentage {
+		 font-size: 7em;
+	}
+}
+ @media (min-width: 75em) {
+	 .percentage {
+		 font-size: 12em;
+	}
+}
+ label.voted > span {
+	 bottom: 50px;
+	 font-size: 1em;
+	 position: absolute;
+}
+ @media (min-width: 35em) {
+	 label.voted > span {
+		 font-size: 2em;
+	}
+}
+ @media (min-width: 75em) {
+	 label.voted > span {
+		 font-size: 3em;
+	}
+}
+ label.voted > .percentage {
+	 display: block;
+}
+ label.voted.option-01::after {
+	 background-color: rgba(129, 191, 67, .5);
+}
+ label.voted.option-02::after {
+	 background-color: black;
+}
+ label.voted::before, label.voted:hover::before {
+	 background-color: rgba(0, 0, 0, .8);
+}
+ .option-01 {
+
+ background: url('../static/poll/bg1.jpg');
+ background-color: black;
+}
+ .option-02 {
+	 background: url('../static/poll/bg2.jpg');
+	 background-color: black;
+}
+ 
+
+
+
+{% endblock style %}
+
+
+
+
+{% block content %}
+
+<br><br>
+
+
+
+
+<div class="result" style="">
+<form method="POST" action="" class="result">
+    {% csrf_token %}
+
+  <h1>{{ poll.question }}</h1>
+  <label class="option-01">
+    <div class="percentage"><span id="percentage-01"></span>%</div>
+    <span>{{ poll.option1 }}</span>
+    <input type="submit" name="option1">
+  </label>
+  <label class="option-02">
+    <div class="percentage"><span id="percentage-02"></span>%</div>
+    <span>{{ poll.option2 }}</span>
+    <input type="submit" name="option2">
+  </label>
+
+</form>
+</div>
+
+{% endblock content %}
+{% block js %}
+
+$('label').click(function(event) {
+  var value01 = new countUp("percentage-01", 0, 87, 0, 2.5),
+      value02 = new countUp("percentage-02", 0, 13, 0, 2.5);
+  
+  $('label').addClass('voted');
+  
+  value01.start();
+  value02.start();
+});
+
+{% endblock js %}
+
+<!-- <form method="POST" action="">
+    {% csrf_token %}
+    <label>{{ poll.question }}</label>
+    <button type="submit" name="option1">{{ poll.option1 }}</button>
+    <button type="submit" name="option2">{{ poll.option2 }}</button>
+
+</form> -->

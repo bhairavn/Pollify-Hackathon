@@ -1,0 +1,123 @@
+{% extends 'poll/base.html'%}
+{% load static %}
+{% load crispy_forms_tags%}
+
+{% block style %}
+
+body{
+	background-color: black;
+}
+
+
+.imageContainer {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+/* Centered text */
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow:;
+  font-size:20px;
+}
+.box:hover {
+  box-shadow: 0 0 500px rgba(33,33,33,.2); 
+}
+.box{
+	 transition: box-shadow .3s;
+}
+@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro');
+
+.animate {
+  border-right: solid 3px rgba(0,255,0,.75);
+  white-space: nowrap;
+  overflow: hidden;    
+  font-family: 'Source Code Pro', monospace;  
+  font-size: 50px;
+  color: rgba(255,255,255,.70);
+  margin: 0 auto;
+}
+
+/* Animation */
+.animate {
+  animation: animated-text 4s steps(25,end) 1s 1 normal both,
+             animated-cursor 600ms steps(25,end) infinite;
+}
+
+/* text animation */
+
+@keyframes animated-text{
+  from{width: 0;}
+  to{width: 900px;}
+}
+
+/* cursor animations */
+
+@keyframes animated-cursor{
+  from{border-right-color: rgba(0,255,0,.75);}
+  to{border-right-color: transparent;}
+}
+
+{% endblock %}
+
+{% block content %}
+
+ 
+<!-- Header -->
+<header class="w3-container w3-red w3-center" style="padding:128px 16px">
+  <h1 class="w3-margin w3-jumbo "><p class="animate">Pollify - Get an honest opinion</p></h1>
+  <p class="w3-xlarge"></p>
+  <a class="w3-button w3-black w3-padding-large w3-large w3-margin-top" href="{% url 'create-poll' %}" >Get Started</a>
+</header>
+
+
+
+<div class="w3-row" id="myGrid" style="margin-bottom:128px">
+<div class="w3-third">
+{% for poll in polls %}	
+	{% if forloop.counter|divisibleby:3 %}
+	{% elif forloop.counter|divisibleby:2 %}
+	{% else %}
+	  	<div class="container box " style="padding: 0px; position: relative;">
+	  		<img src="/media/background_pics/{{ poll.image_bg }}" style="width:100%; border-style: solid;">	
+	  		<div class="centered" style="color:black;"><a style="text-decoration: none;" href="{{ poll.id }}/">{{ poll.question }} </a></div>
+	  	</div>
+  	{% endif %}
+{% endfor %}   
+</div>
+
+
+<div class="w3-third">
+{% for poll in polls %}	
+	{% if forloop.counter|divisibleby:3 %}
+		<div class="container box" style="padding: 0px; position: relative;">
+  			<img src="/media/background_pics/{{ poll.image_bg }}" style="width:100%; border-style: solid;">	
+  			<div class="centered" style="color:black;"><a style="text-decoration: none;" href="{{ poll.id }}/">{{ poll.question }}</a></div>
+  		</div>
+  	{% endif %}
+{% endfor %} 
+</div>
+
+<div class="w3-third">
+{% for poll in polls %}	
+	{% if forloop.counter|divisibleby:3 %}
+	<div></div>
+	{% elif forloop.counter|divisibleby:2 %}
+  		<div class="container box" style="padding: 0px; position: relative;">
+  			<img src="/media/background_pics/{{ poll.image_bg }}" style="width:100%; border-style: solid;">	
+  			<div class="centered" style="color:black;"><a style="text-decoration: none;" href="{{ poll.id }}/">{{ poll.question }} </a></div>
+  		</div>
+  	{% endif %}	
+{% endfor %}   
+</div>
+</div>
+
+
+
+{% endblock content %}
+
+
+

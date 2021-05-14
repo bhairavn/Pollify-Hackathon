@@ -1,0 +1,22 @@
+
+{% extends 'poll/base.html'%}
+{% load static %}
+{% load crispy_forms_tags%}
+
+
+{% block content %}
+
+
+<br><br>
+<div class="container" style="align-content: center;">
+
+ <h1>You have logged out</h1>
+ <a class="btn btn-outline-success" href="{% url 'login' %}">Login again</a>
+	
+</div>
+
+{% endblock content %}
+
+
+
+    
